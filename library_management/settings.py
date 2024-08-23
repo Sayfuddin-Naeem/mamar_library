@@ -30,7 +30,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"]
 # CSRF_TRUSTED_ORIGINS = [
 #     'https://mamar-bank-7lsg.onrender.com',
 #     'https://*.127.0.0.1'
@@ -103,23 +103,23 @@ WSGI_APPLICATION = 'library_management.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
-    }
-}
-
 # DATABASES = {
-#     'default': dj_database_url.config(
-#         # Replace this value with your local database's connection string.
-#         default='postgresql://mamarbank_dtin_user:S2CeW17HfVPKDdoPViGPZkQw8chwoLpZ@dpg-cr1fvu5umphs73ae6gqg-a.oregon-postgres.render.com/mamarbank_dtin',
-#     )
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': env("DB_NAME"),
+#         'USER': env("DB_USER"),
+#         'PASSWORD': env("DB_PASSWORD"),
+#         'HOST': env("DB_HOST"),
+#         'PORT': env("DB_PORT"),
+#     }
 # }
+
+DATABASES = {
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://mamarlibrary_user:Vxp75XoQ4y9XFi5BZN3MWGTsN2fQ0XIZ@dpg-cr495q3v2p9s73cohekg-a.oregon-postgres.render.com/mamarlibrary',
+    )
+}
 
 
 # Password validation
