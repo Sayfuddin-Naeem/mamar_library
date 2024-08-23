@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg px-5 py-3 shadow-lg" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-3" href="/">Mamar Library</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
+        <div>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'transaction_report' %}">Report</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'deposit_money' %}">Deposit</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        
+        <div class="d-flex" role="search">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if user.is_authenticated %}
+            <div class="text-info-emphasis fs-5 my-auto fw-bold px-4">
+              Welcome, {{ request.user.first_name }} (balance: {{request.user.account.balance}})
+            </div>
+          
+            <li class="nav-item">
+              <a href="{% url 'profile' %}" class="btn btn-lg btn-outline-warning me-2 text-white">Profile</a>
+            </li>
+            <li class="nav-item">
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-lg btn-outline-warning me-2 text-white" type="submit">Logout</button>
+              </form>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a href="{% url 'register' %}" class="btn btn-lg btn-outline-success me-2 text-white">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'login' %}" class="btn btn-lg btn-outline-warning me-2 text-white">Login</a>
+            </li>
+            {% endif %}
+        </ul>
+        </div>
+      </div>
+    </div>
+  </nav>

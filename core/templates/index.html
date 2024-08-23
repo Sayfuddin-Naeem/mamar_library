@@ -1,0 +1,70 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head_title %}Home - {{ block.super }}{% endblock %} {% block content %}
+<div class="container mx-auto my-5">
+    <div class="card p-5 overflow-hidden">
+        <h1 class="text-center my-5">Welcome to <span class="text-success">Mamar Library !</span> 📚</h1>
+        <div class="d-flex flex-wrap justify-content-evenly align-items-center pt-3">
+            <div class="col-6">
+                <p class="mb-4 fs-5" style="text-align: justify;">
+                    We're excited to have you with us! Our system offers a seamless and user-friendly experience to make your library visits even more enjoyable. Here's what you can do:
+        
+                    Deposit Money: Easily deposit funds into your library account, ensuring you’re always ready to borrow the books you love.
+                    Borrow Books: Explore our vast collection of books across various categories. Find your favorite titles and borrow them with just a few clicks!
+                    Return Books: Returning books is just as simple. Our system keeps track of due dates and ensures a hassle-free return process.
+                    Book Borrowing Fees: Our borrowing system includes a nominal fee based on the book category, helping us maintain our extensive collection for all users.
+                    Book Categories: Whether you're into Fiction, Non-fiction, Science, Technology, History, or Children's books, we have something for everyone. Dive into our categorized collection to find the perfect read for you.
+                    Thank you for choosing our library. Happy reading! 📖
+        
+                </p>
+            </div>
+            <div class="col-6">
+                <img src="{% static 'img/library.jpeg' %}" alt="" style="width: 470px;height: 520px;" class="ms-5 mb-3">
+            </div>
+        </div>
+    </div>
+
+    <div class="card h-75 mb-3 mt-5 p-2 border-5 border-start-0 border-end-0 border-bottom-0 border-warning shadow">
+        <div class="d-flex flex-wrap justify-content-evenly my-2">
+          {% for cat in category %}
+          <div class="form-check">
+            <input 
+            class="form-check-input" 
+            type="radio" 
+            name="category"
+            id="cat-{{cat.id}}"
+            {% if slCat and slCat.id == cat.id %} checked {% endif %} 
+            onclick="window.location.href='{% url 'category_wise_post' cat.slug %}'"
+            />
+            <label class="form-check-label" for="cat-{{cat.id}}">
+              {{cat.name}}
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    <div class="card mb-5">
+        <h2 class="card ms-3 mt-5 p-2 w-50 border-5 border-top-0 border-end-0 border-bottom-0 border-danger">Total book found : {{books | length}}</h2>
+        <div class="d-flex flex-wrap justify-content-center my-5 ps-3 pt-3">
+          {% for book in books %}
+          <div class="col-sm-4 col-lg-4 mb-3">
+            <div class="card h-100 me-2">
+              <img src="{{book.image.url}}" class="card-img-top object-fit-cover w-100" style="height: 450px;" alt="">
+              <div class="card-body d-flex flex-column flex-grow-1">
+                <h5 class="card-title">{{book.title}}</h5>
+                <p class="card-text">Borrow Price($) : {{book.price}}</p>
+                <p class="card-text">Category Name : {{book.category.name}}</p>
+                
+                <a class="w-50 text-decoration-none btn btn-outline-warning" href="{% url 'book_detail' book.id %}">View Details</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+</div>
+
+{% endblock %}

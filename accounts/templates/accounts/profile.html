@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block head_title %}{{request.user.first_name}}'s Profile - {{ block.super }}{% endblock %}
+
+{% block content %}
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger mt-2" role="alert">
+        <strong>Error!</strong> {{ error }}
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="container card my-5 shadow-md">
+    <div class="card-body">
+        <h1 class="card-title text-center mb-4">Profile Page</h1>
+        <a href="{% url 'update_profile' %}" class="btn btn-danger mb-4">Update Profile</a>
+        
+        <div class="my-4">
+            <h2 class="h4 text-center mb-4">Books Borrow History</h2>
+            <hr>
+            
+            <form method="get" action="{% url 'profile' %}" class="mb-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-3 mb-3">
+                        <label for="start_date" class="form-label">From:</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="end_date" class="form-label">To:</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control">
+                    </div>
+                    <div class="col-md-3 mb-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    </div>
+                </div>
+            </form>
+            
+            <table class="table table-bordered table-success table-striped">
+                <thead class="bg-purple-900 text-white">
+                    <tr>
+                        <th>Id</th>
+                        <th>Date</th>
+                        <th>Book Name</th>
+                        <th>Borrow Price</th>
+                        <th>Balance After Borrow</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for borrow in borrow_list %}
+                    <tr>
+                        <td>  {{ borrow.transaction.id}}</td>
+                        <td>  {{ borrow.transaction.timestamp|date:"F d, Y h:i A" }}</td>
+                        <td>  {{ borrow.book.title }}</td>
+                        <td>$ {{ borrow.transaction.amount|floatformat:2|intcomma }}</td>
+                        <td>$ {{ borrow.transaction.balance_after_transaction|floatformat:2|intcomma }}</td>
+                        {% if borrow.return_book %}
+                        <td>
+                          <span class="badge bg-success ms-2 mt-2">RETURNED</span>
+                        </td>
+                        {% else %}
+                        <td>
+                          <form method="post" action="{% url 'return_now' borrow.id %}">
+                            {% csrf_token %}
+                            <button class="m-1 text-decoration-none btn btn-danger" type="submit">RETURN</button>
+                          </form>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

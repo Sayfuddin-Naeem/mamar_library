@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ title }}{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-center mt-5">
+    <div class="card w-50 p-4">
+        <h1 class="font-weight-bold text-center pb-3 pt-4">{{ title }}</h1>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label font-weight-bold" for="amount">
+                    Amount
+                </label>
+                <input class="form-control" name="amount" id="amount" type="number" required placeholder="Amount">
+            </div>
+
+            {% if form.amount.errors %}
+                {% for error in form.amount.errors %}
+                    <p class="text-danger small pb-2">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+            
+            <div class="text-center">
+                <button class="btn btn-info font-weight-bold" type="submit">
+                    Deposit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

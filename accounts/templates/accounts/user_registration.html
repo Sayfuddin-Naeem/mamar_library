@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head_title %}Registation - {{ block.super }}{% endblock %}
+{% block content %}
+
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger mt-2" role="alert">
+        <strong>Error!</strong> {{ error }}
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="my-5 pb-4 mx-auto w-75">
+    <div class="container card">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-5">Sign Up</h1>
+            <form method="post" class="mt-5">
+                {% csrf_token %}
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+    
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label fs-5">{{ form.username.label }}</label>
+                        {{ form.username|add_class:"form-control" }}
+                        {% if form.username.errors %}
+                            {% for error in form.username.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label fs-5">{{ form.email.label }}</label>
+                        {{ form.email|add_class:"form-control" }}
+                        {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.first_name.id_for_label }}" class="form-label fs-5">{{ form.first_name.label }}</label>
+                        {{ form.first_name|add_class:"form-control" }}
+                        {% if form.first_name.errors %}
+                            {% for error in form.first_name.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.last_name.id_for_label }}" class="form-label fs-5">{{ form.last_name.label }}</label>
+                        {{ form.last_name|add_class:"form-control" }}
+                        {% if form.last_name.errors %}
+                            {% for error in form.last_name.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.gender.id_for_label }}" class="form-label fs-5">{{ form.gender.label }}</label>
+                        {{ form.gender|add_class:"form-control" }}
+                        {% if form.gender.errors %}
+                            {% for error in form.gender.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.birth_date.id_for_label }}" class="form-label fs-5">{{ form.birth_date.label }}</label>
+                        {{ form.birth_date|add_class:"form-control" }}
+                        {% if form.birth_date.errors %}
+                            {% for error in form.birth_date.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label fs-5">{{ form.password1.label }}</label>
+                        {{ form.password1|add_class:"form-control" }}
+                        {% if form.password1.errors %}
+                            {% for error in form.password1.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label fs-5">{{ form.password2.label }}</label>
+                        {{ form.password2|add_class:"form-control" }}
+                        {% if form.password2.errors %}
+                            {% for error in form.password2.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.street_address.id_for_label }}" class="form-label fs-5">{{ form.street_address.label }}</label>
+                        {{ form.street_address|add_class:"form-control" }}
+                        {% if form.street_address.errors %}
+                            {% for error in form.street_address.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.city.id_for_label }}" class="form-label fs-5">{{ form.city.label }}</label>
+                        {{ form.city|add_class:"form-control" }}
+                        {% if form.city.errors %}
+                            {% for error in form.city.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.postal_code.id_for_label }}" class="form-label fs-5">{{ form.postal_code.label }}</label>
+                        {{ form.postal_code|add_class:"form-control" }}
+                        {% if form.postal_code.errors %}
+                            {% for error in form.postal_code.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.country.id_for_label }}" class="form-label fs-5">{{ form.country.label }}</label>
+                        {{ form.country|add_class:"form-control" }}
+                        {% if form.country.errors %}
+                            {% for error in form.country.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-lg btn-success px-5 py-2 fs-5" type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

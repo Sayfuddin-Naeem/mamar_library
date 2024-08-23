@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Book Details - {{ block.super }}{% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="mb-5 pb-5">
+  <div class="card mx-5 my-3 p-3">
+    <div class="row g-0">
+      <div class="col-md-5">
+        <img src="{{book.image.url}}" class="img-fluid rounded-start" alt="{{book.title}}">
+      </div>
+      <div class="col-md-7 my-auto ps-5 fs-5">
+        <div class="card-body">
+          <h5 class="card-title fs-3">Book Name : {{book.title}}</h5>
+          <p class="card-text">Category Name : {{book.category.name}}</p>
+          <p class="card-text">Borrow Price($) : {{book.price}}</p>
+          <p class="card-text">Quantity : {{book.quantity}}</p>
+          <p class="card-text">Description : {{book.description}}</p>
+  
+          {% if request.user.is_authenticated %}
+            {% if not borrow or borrow.return_book %}
+              <form method="post" action="{% url 'borrow_now' book.id %}">
+                {% csrf_token %}
+                <button class="btn btn-warning me-2 text-white" type="submit">Borrow Now</button>
+              </form>
+            {% endif %}
+          {% endif %}
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card shadow border-0 mx-5 ps-3 py-2">
+      <h5 class="w-50 mb-2 ps-2 border border-5 border-top-0 border-end-0 border-bottom-0 border-danger">Total Reviews: {{reviews | length}}</h5>
+      {% for review in reviews %}
+      <div class="card-body border rounded my-1 w-50">
+          <p><b class='me-3'>Review by - {{review.name}}</b> <small>{{review.created_on}}</small> </p>
+          <p class="ms-4">{{review.body}}</p>
+      </div>
+      {% endfor %}
+  </div>
+  
+  {% if request.user.is_authenticated and borrow %}
+  <div class="card shadow border-0 mx-5 mt-2 mb-5 px-5 py-2">
+      <h1 class="text-center w-50 mt-3">Add Review</h1>
+      <div class="card-body w-50">
+          <form action="" method="POST">
+              {% csrf_token %}
+              {{review_form | crispy}}
+  
+              <button class="btn btn-warning" type="submit">Review</button>
+          </form>
+      </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}
